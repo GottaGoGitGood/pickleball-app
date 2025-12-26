@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  # This acts as your Database Server
+  db:
+    image: mysql:8.0
+    container_name: pickleball-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword  # You will use this to log in
+      MYSQL_DATABASE: pickleball_db      # The name of your specific database
+    ports:
+      - "3307:3306"  # The "Door" we are opening to let your app in
+    volumes:
+      - db_data:/var/lib/mysql           # This saves your data if you restart your computer
+
+volumes:
+  db_data:
