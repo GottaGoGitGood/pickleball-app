@@ -1,3 +1,6 @@
+// 1. LOAD ENVIRONMENT VARIABLES
+require('dotenv').config();
+
 const express = require('express');
 const mysql = require('mysql2');
 const cors = require('cors');
@@ -6,14 +9,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. DATABASE CONNECTION
+// 2. DATABASE CONNECTION
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'rootpassword',
-  database: 'pickleball_db',
-  port: 3307 
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT
 });
+
 
 db.connect((err) => {
   if (err) {
@@ -24,7 +28,7 @@ db.connect((err) => {
   createTables();
 });
 
-// 2. CREATE TABLES AUTOMATICALLY
+// 3. CREATE TABLES AUTOMATICALLY
 function createTables() {
   const leaguesTable = `CREATE TABLE IF NOT EXISTS leagues (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -95,7 +99,7 @@ app.get('/api/leagues', (req, res) => {
 });
 
 // 4. START SERVER
-const PORT = 8080;
+const PORT = process.env.PORT || 8080; // Uses .env, defaults to 8080 if missing
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
