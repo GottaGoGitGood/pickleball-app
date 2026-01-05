@@ -1,42 +1,177 @@
-#root {
-  max-width: 1280px;
+/* App.css - The 3-Column Dashboard */
+.app-container {
+  max-width: 1400px; /* Made wider to fit 3 columns */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
   text-align: center;
+  color: #333;
+  margin-bottom: 40px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* --- THE NEW 3-COLUMN LAYOUT --- */
+.dashboard-columns {
+  display: grid;
+  /* This creates 3 equal columns: Left, Middle, Right */
+  grid-template-columns: 1fr 1fr 1fr; 
+  gap: 30px;
+  align-items: start; /* Keeps columns from stretching weirdly */
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+/* On mobile phones, switch back to 1 column */
+@media (max-width: 900px) {
+  .dashboard-columns {
+    grid-template-columns: 1fr;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.column-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
 }
 
-.card {
-  padding: 2em;
+.card-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between cards in the same column */
 }
 
-.read-the-docs {
+/* --- CARD STYLES (Kept mostly the same) --- */
+.league-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  border-left: 8px solid; /* Thicker border for better visibility */
+}
+
+.league-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.beginner { border-left-color: #2ecc71; }
+.intermediate { border-left-color: #f1c40f; }
+.advanced { border-left-color: #e74c3c; }
+
+.league-card h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+}
+
+.league-details p {
+  margin: 5px 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.join-btn {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.join-btn:hover { background-color: #2980b9; }
+
+/* --- POPUP / MODAL STYLES --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* Dark see-through background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
   color: #888;
 }
+
+.modal-subtitle {
+  color: #666;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto; /* Scroll if too many players */
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.player-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.player-list li:last-child {
+  border-bottom: none;
+}
+
+.player-rating {
+  font-weight: bold;
+  color: #3498db;
+}
+
+.join-confirm-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.join-confirm-btn:hover { background-color: #219150; }
